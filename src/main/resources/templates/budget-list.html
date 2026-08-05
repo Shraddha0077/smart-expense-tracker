@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Budgets</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+<body>
+
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">Budget List</h2>
+
+    <a th:href="@{/budgets/add}" class="btn btn-success mb-3">
+        Add Budget
+    </a>
+
+    <a th:href="@{/}" class="btn btn-dark mb-3">
+        Dashboard
+    </a>
+
+    <table class="table table-bordered table-hover">
+
+        <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Category</th>
+            <th>Month</th>
+            <th>Budget Amount</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr th:each="budget : ${budgets}">
+            <td th:text="${budget.id}"></td>
+            <td th:text="${budget.category.name}"></td>
+            <td th:text="${budget.month}"></td>
+            <td th:text="${budget.amount}"></td>
+
+            <td>
+
+                <a th:href="@{/budgets/edit/{id}(id=${budget.id})}"
+                   class="btn btn-warning btn-sm">
+                    Edit
+                </a>
+
+                <a th:href="@{/budgets/delete/{id}(id=${budget.id})}"
+                   class="btn btn-danger btn-sm"
+                   onclick="return confirm('Delete this budget?')">
+                    Delete
+                </a>
+
+            </td>
+
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(budgets)}">
+            <td colspan="5" class="text-center">
+                No budgets found.
+            </td>
+        </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</body>
+</html>
